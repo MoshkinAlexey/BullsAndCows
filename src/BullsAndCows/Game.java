@@ -6,7 +6,7 @@ import java.util.*;
 
 class Game {
     static boolean beginGame() {
-        int difficult = -1;
+        int difficult;
         System.out.println("Выберите сложность:");
         System.out.println("0 - очень лёгкая [0..9; 4 символа]");
         System.out.println("1 - лёгкая [0..9; 6 символов]");
@@ -30,18 +30,22 @@ class Game {
             System.out.println("Введите код (\"-\" для выхода):");
             String inputString = scanner.next();
             if (inputString.equals("-")) {
+                scanner.close();
                 return true;
             }
             checkingCode = new Code(inputString);
             if (checkingCode.equals(rightCode)) {
                 System.out.println("Поздравляю! Вы угадали код!");
                 System.out.println("Начать заново? (\"+\" - да, \"-\" - нет)");
-                return !scanner.next().equals("+");
+                String choose = scanner.next();
+                scanner.close();
+                return !choose.equals("+");
             } else {
                 System.out.println(checkingCode.compare(rightCode));
                 System.out.print("Попробуйте ещё раз. ");
             }
         } while (!checkingCode.equals(rightCode));
+        scanner.close();
         return true;
     }
 }
